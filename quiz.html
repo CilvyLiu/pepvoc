@@ -2,116 +2,141 @@
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nova's Junior Lab | 全通关测验</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Nova's Junior Lab | 综合测验中心</title>
     <style>
-        :root { --primary: #4D96FF; --success: #6BCB77; --bg: #F0F2F5; }
-        body { font-family: system-ui, sans-serif; background: var(--bg); margin: 0; padding: 20px; display: flex; flex-direction: column; align-items: center; }
+        :root { --primary: #4D96FF; --secondary: #9B59B6; --success: #6BCB77; --bg: #F0F2F5; }
+        body { font-family: 'system-ui', sans-serif; background: var(--bg); margin: 0; padding: 20px; display: flex; flex-direction: column; align-items: center; }
         
-        .quiz-container { background: white; width: 100%; max-width: 500px; border-radius: 24px; padding: 25px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); margin-top: 20px; }
+        .mode-selector { display: flex; gap: 10px; margin-bottom: 20px; background: #ddd; padding: 5px; border-radius: 50px; }
+        .mode-btn { border: none; padding: 10px 25px; border-radius: 40px; cursor: pointer; font-weight: bold; transition: 0.3s; background: transparent; color: #666; }
+        .mode-btn.active { background: white; color: var(--primary); box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+
+        .quiz-container { background: white; width: 100%; max-width: 500px; border-radius: 24px; padding: 25px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
         .progress { color: #888; font-size: 14px; margin-bottom: 10px; font-weight: bold; }
+        .scene-tag { background: #F0F7FF; color: #4D96FF; padding: 4px 12px; border-radius: 50px; font-size: 12px; margin-bottom: 10px; display: none; }
         
-        #question-box { font-size: 24px; font-weight: bold; color: #2D3436; margin-bottom: 20px; }
+        #question-box { font-size: 22px; font-weight: bold; color: #2D3436; margin-bottom: 20px; min-height: 60px; line-height: 1.4; }
         
         .options-grid { display: grid; gap: 12px; }
         .option-btn { 
             background: #F8F9FA; border: 2px solid #EEE; padding: 15px; border-radius: 15px; 
-            text-align: left; font-size: 18px; cursor: pointer; transition: 0.2s;
+            text-align: left; font-size: 17px; cursor: pointer; transition: 0.2s; color: #444;
             -webkit-tap-highlight-color: transparent;
         }
-        .option-btn:active { transform: scale(0.98); }
-        .option-btn.correct { background: var(--success); color: white; border-color: var(--success); }
-        .option-btn.wrong { background: #FF6B6B; color: white; border-color: #FF6B6B; }
+        .option-btn.correct { background: var(--success) !important; color: white !important; border-color: var(--success) !important; }
+        .option-btn.wrong { background: #FF6B6B !important; color: white !important; border-color: #FF6B6B !important; }
 
         .score-panel { text-align: center; display: none; }
         .score-val { font-size: 60px; color: var(--primary); font-weight: 900; }
-        .btn-restart { background: var(--primary); color: white; border: none; padding: 15px 40px; border-radius: 50px; font-size: 18px; margin-top: 20px; cursor: pointer; }
+        .btn-action { background: var(--primary); color: white; border: none; padding: 15px 40px; border-radius: 50px; font-size: 18px; margin-top: 20px; cursor: pointer; font-weight: bold; }
     </style>
 </head>
 <body>
 
-    <h1>🚀 全息测验中心</h1>
+    <h1>🚀 测验挑战中心</h1>
+
+    <div class="mode-selector" id="mode-ui">
+        <button class="mode-btn active" onclick="switchMode('words')">单词测试</button>
+        <button class="mode-btn" onclick="switchMode('phrases')">表达实战</button>
+    </div>
 
     <div class="quiz-container" id="quiz-ui">
-        <div class="progress">Question <span id="current-idx">1</span> / <span id="total-idx">?</span></div>
-        <div id="question-box">加载中...</div>
+        <div class="progress">Question <span id="current-idx">1</span> / 10</div>
+        <div id="scene-tag" class="scene-tag"></div>
+        <div id="question-box">准备中...</div>
         <div class="options-grid" id="options"></div>
     </div>
 
     <div class="quiz-container score-panel" id="score-ui">
-        <h2>🎉 测验完成!</h2>
+        <h2>🎉 挑战完成!</h2>
         <div class="score-val" id="final-score">0</div>
-        <p id="score-msg"></p>
-        <button class="btn-restart" onclick="location.reload()">重新开始</button>
+        <p id="score-msg">Well done!</p>
+        <button class="btn-action" onclick="location.reload()">重新开始</button>
         <br>
-        <button class="btn-restart" style="background:#2D3436" onclick="location.href='index.html'">返回首页</button>
+        <button class="btn-action" style="background:#2D3436; margin-top: 10px;" onclick="location.href='index.html'">返回首页</button>
     </div>
 
     <script>
-        let allWords = [];
+        let currentMode = 'words'; // 'words' or 'phrases'
+        let quizPool = [];
         let currentQuestion = 0;
         let score = 0;
 
-        // 1. 并发抓取所有单元的数据
-        async function loadAllData() {
-            const units = [1, 2, 3, 4, 5, 6];
-            try {
-                const promises = units.map(u => fetch(`./unit${u}/data.json`).then(r => r.json()));
-                const results = await Promise.all(promises);
-                allWords = results.flat(); // 合并成一个大数组
-                startQuiz();
-            } catch (e) {
-                document.getElementById('question-box').innerText = "❌ 数据加载失败，请确保所有 unitX 文件夹下都有 data.json";
-            }
+        function speakUK(text) {
+            const audioUrl = `https://dict.youdao.com/dictvoice?audio=${encodeURIComponent(text)}&type=2`;
+            const audio = new Audio(audioUrl);
+            audio.play().catch(() => {
+                window.speechSynthesis.cancel();
+                const speech = new SpeechSynthesisUtterance(text);
+                speech.lang = 'en-GB';
+                speech.rate = 0.85;
+                window.speechSynthesis.speak(speech);
+            });
         }
 
-        function startQuiz() {
-            // 洗牌：随机抽取 10 个题目
-            allWords.sort(() => Math.random() - 0.5);
-            allWords = allWords.slice(0, 10);
+        async function switchMode(mode) {
+            currentMode = mode;
+            currentQuestion = 0;
+            score = 0;
             
-            document.getElementById('total-idx').innerText = allWords.length;
+            // UI 更新
+            document.querySelectorAll('.mode-btn').forEach(b => b.classList.toggle('active', b.innerText.includes(mode==='words'?'单词':'表达')));
+            document.getElementById('scene-tag').style.display = (mode === 'phrases') ? 'inline-block' : 'none';
+            
+            if (mode === 'words') {
+                const units = [1, 2, 3, 4, 5, 6];
+                const results = await Promise.all(units.map(u => fetch(`./unit${u}/data.json`).then(r => r.json())));
+                quizPool = results.flat().sort(() => Math.random() - 0.5).slice(0, 10);
+            } else {
+                const res = await fetch('expressions_data.json');
+                const data = await res.json();
+                quizPool = Object.values(data).flat().sort(() => Math.random() - 0.5).slice(0, 10);
+            }
             showQuestion();
         }
 
         function showQuestion() {
-            const item = allWords[currentQuestion];
+            const item = quizPool[currentQuestion];
             document.getElementById('current-idx').innerText = currentQuestion + 1;
-            document.getElementById('question-box').innerText = `“${item.chinese}”的英文是？`;
             
-            // 生成干扰项：从库里随机抓 3 个不同的词
-            let distractors = allWords
-                .filter(w => w.word !== item.word)
+            if (currentMode === 'words') {
+                document.getElementById('question-box').innerText = `“${item.chinese}”的英文是？`;
+            } else {
+                document.getElementById('scene-tag').innerText = `场景：${item.scene || '日常交流'}`;
+                document.getElementById('question-box').innerText = `你想说：“${item.zh}”`;
+            }
+            
+            // 生成干扰项
+            const correctKey = currentMode === 'words' ? 'word' : 'en';
+            let distractors = quizPool
+                .filter(w => w[correctKey] !== item[correctKey])
                 .sort(() => Math.random() - 0.5)
                 .slice(0, 3)
-                .map(w => w.word);
+                .map(w => w[correctKey]);
             
-            let choices = [...distractors, item.word].sort(() => Math.random() - 0.5);
+            let choices = [...distractors, item[correctKey]].sort(() => Math.random() - 0.5);
             
             const optionsDiv = document.getElementById('options');
             optionsDiv.innerHTML = "";
-            
             choices.forEach(choice => {
                 const btn = document.createElement('button');
                 btn.className = 'option-btn';
                 btn.innerText = choice;
-                btn.onclick = () => checkAnswer(choice, item.word, btn);
+                btn.onclick = () => checkAnswer(choice, item[correctKey], btn);
                 optionsDiv.appendChild(btn);
             });
         }
 
         function checkAnswer(selected, correct, btn) {
-            // 禁用所有按钮防止连点
             document.querySelectorAll('.option-btn').forEach(b => b.onclick = null);
 
             if (selected === correct) {
                 btn.classList.add('correct');
                 score += 10;
-                // 播放正确音效或简单发音
-                speak(correct);
+                speakUK(correct);
             } else {
                 btn.classList.add('wrong');
-                // 找出正确的那个标绿
                 document.querySelectorAll('.option-btn').forEach(b => {
                     if(b.innerText === correct) b.classList.add('correct');
                 });
@@ -119,28 +144,24 @@
 
             setTimeout(() => {
                 currentQuestion++;
-                if (currentQuestion < allWords.length) {
+                if (currentQuestion < quizPool.length) {
                     showQuestion();
                 } else {
-                    showResult();
+                    document.getElementById('quiz-ui').style.display = 'none';
+                    document.getElementById('mode-ui').style.display = 'none';
+                    document.getElementById('score-ui').style.display = 'block';
+                    document.getElementById('final-score').innerText = score;
                 }
-            }, 1200);
+            }, 1500);
         }
 
-        function showResult() {
-            document.getElementById('quiz-ui').style.display = 'none';
-            document.getElementById('score-ui').style.display = 'block';
-            document.getElementById('final-score').innerText = score;
-            document.getElementById('score-msg').innerText = score >= 80 ? "太棒了，Nova！你是词汇大师！" : "再接再厉，多回单元里听听发音哦！";
-        }
+        // 初始化加载单词模式
+        switchMode('words');
 
-        function speak(text) {
-            const speech = new SpeechSynthesisUtterance(text);
-            speech.lang = 'en-GB';
-            window.speechSynthesis.speak(speech);
-        }
-
-        loadAllData();
+        // 解锁音频
+        document.addEventListener('touchstart', () => {
+            window.speechSynthesis.speak(new SpeechSynthesisUtterance(""));
+        }, { once: true });
     </script>
 </body>
 </html>
