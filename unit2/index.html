@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Unit Explorer | Nova's Junior Lab</title>
+    <style>
+        :root { --primary: #4D96FF; --accent: #6BCB77; --bg: #F0F7FF; --card-bg: #FFFFFF; }
+        body { 
+            font-family: 'Segoe UI', system-ui, sans-serif; background: var(--bg); color: #333; margin: 0; padding: 0;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        /* 顶部看板：显示当前选中的逻辑线索 */
+        .status-bar {
+            position: sticky; top: 0; z-index: 1000;
+            background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(15px);
+            border-bottom: 4px solid var(--primary); padding: 15px 20px;
+            display: flex; align-items: center; justify-content: space-between;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+        }
+        #word-display { font-size: 28px; font-weight: 900; color: var(--primary); text-transform: capitalize; }
+        #logic-display { font-size: 14px; color: #666; margin-top: 4px; font-style: italic; }
+
+        /* 卡片容器 */
+        .vocab-grid { 
+            display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); 
+            gap: 15px; padding: 25px; 
+        }
+        
+        .card {
+            background: var(--card-bg); border-radius: 24px; padding: 20px;
+            text-align: center; cursor: pointer; border: 3px solid #E0E0E0;
+            transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 6px 0 #DDD;
+        }
+        /* 点击时的“按下”动效 */
+        .card:active { transform: translateY(4px); box-shadow: 0 2px 0 #DDD; }
+        .card.active { border-color: var(--primary); background: #EBF3FF; transform: scale(1.05); }
+
+        .word-txt { font-size: 18px; font-weight: bold; color: #2D3436; display: block; margin-bottom: 5px; }
+        .ipa-txt { font-size: 11px; color: var(--accent); font-family: 'Arial'; }
+        
+        .back-btn { background: #2D3436; color: white; border: none; padding: 10px 18px; border-radius: 50px; font-size: 14px; cursor: pointer; }
+    </style>
+</head>
+<body>
+
+    <div class="status-bar">
+        <div class="info">
+            <div id="word-display">Ready!</div>
+            <div id="logic-display">点击卡片开始探索单词魔法 ✨</div>
+        </div>
+        <button class="back-btn" onclick="location.href='../index.html'">返回</button>
+    </div>
+
+    <div class="vocab-grid" id="container">正在并网加载数据...</div>
+
+    <script>
+        const wordEl = document.getElementById('word-display');
+        const logicEl = document.getElementById('logic-display');
+        const container = document.getElementById('container');
+
+        // --- 核心：移动端音频激活锁 ---
+        function unlockAudio() {
+            const silent = new SpeechSynthesisUtterance("");
+            window.speechSynthesis.speak(silent);
+            document.removeEventListener('touchstart', unlockAudio);
+        }
+        document.addEventListener('touchstart', unlockAudio);
+
+        // --- 核心：标准英音播放 (Type 2) ---
+        function playUK(text) {
+            const audioUrl = `https://dict.youdao.com/dictvoice?audio=${encodeURIComponent(text)}&type=2`;
+            const audio = new Audio(audioUrl);
+            
+            audio.play().catch(() => {
+                // 离线兜底：系统内置英音
+                window.speechSynthesis.cancel();
+                const speech = new SpeechSynthesisUtterance(text);
+                speech.lang = 'en-GB'; 
+                speech.rate = 0.85; 
+                window.speechSynthesis.speak(speech);
+            });
+        }
+
+        function activate(item, el) {
+            wordEl.innerText = item.word;
+            // 将逻辑线索显示在状态栏
+            logicEl.innerText = `${item.chinese} | ${item.logic}`;
+            
+            // 单词跳动效果
+            wordEl.style.transform = "scale(1.2)";
+            setTimeout(() => wordEl.style.transform = "scale(1)", 200);
+
+            document.querySelectorAll('.card').forEach(c => c.classList.remove('active'));
+            el.classList.add('active');
+
+            playUK(item.word);
+        }
+
+        // 自动识别当前目录下的 data.json
+        fetch('data.json')
+            .then(res => {
+                if(!res.ok) throw new Error();
+                return res.json();
+            })
+            .then(data => {
+                container.innerHTML = "";
+                data.forEach(item => {
+                    const card = document.createElement('div');
+                    card.className = 'card';
+                    card.onclick = () => activate(item, card);
+                    card.innerHTML = `
+                        <span class="word-txt">${item.word}</span>
+                        <span class="ipa-txt">${item.ipa}</span>
+                    `;
+                    container.appendChild(card);
+                });
+            })
+            .catch(err => {
+                container.innerHTML = "❌ 数据连接失败，请确认 data.json 已经就位！";
+            });
+    </script>
+</body>
+</html>
