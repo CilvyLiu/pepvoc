@@ -1,0 +1,19 @@
+[
+  { "word": "colour", "ipa": "/ˈkʌlə(r)/", "pos": "n.", "chinese": "颜色", "core": "Rainbow", "logic": "彩虹有很多种：What ____ is it?", "example": "I like this colour." },
+  { "word": "orange", "ipa": "/ˈɒrɪndʒ/", "pos": "adj./n.", "chinese": "橙红色(的)", "core": "Orange", "logic": "和橙子一样的颜色：An ____ bag.", "example": "It is orange." },
+  { "word": "green", "ipa": "/ɡriːn/", "pos": "adj./n.", "chinese": "绿色(的)", "core": "Green Grass", "logic": "春天草地的颜色：The leaf is ____.", "example": "I have a green pen." },
+  { "word": "red", "ipa": "/red/", "pos": "adj./n.", "chinese": "红色(的)", "core": "Red Apple", "logic": "像火一样的颜色：A ____ apple.", "example": "Red is my favourite." },
+  { "word": "blue", "ipa": "/bluː/", "pos": "adj./n.", "chinese": "蓝色(的)", "core": "Blue Sky", "logic": "大海和天空的颜色：The sea is ____.", "example": "A blue bird." },
+  { "word": "make", "ipa": "/meɪk/", "pos": "v.", "chinese": "使出现；做", "core": "Magic Make", "logic": "变个魔术：____ a card for mum.", "example": "Let's make a rainbow." },
+  { "word": "purple", "ipa": "/ˈpɜːpl/", "pos": "adj./n.", "chinese": "紫色(的)", "core": "Purple Grape", "logic": "葡萄的颜色：A ____ flower.", "example": "I like purple." },
+  { "word": "brown", "ipa": "/braʊn/", "pos": "adj./n.", "chinese": "棕色(的)", "core": "Brown Bear", "logic": "巧克力和熊的颜色：A ____ bear.", "example": "My dog is brown." },
+  { "word": "bear", "ipa": "/beə(r)/", "pos": "n.", "chinese": "熊", "core": "Big Bear", "logic": "森林里的大：A big brown ____.", "example": "Look at the bear." },
+  { "word": "yellow", "ipa": "/ˈjeləʊ/", "pos": "adj./n.", "chinese": "黄色(的)", "core": "Yellow Sun", "logic": "香蕉和星星的颜色：A ____ duck.", "example": "The sun is yellow." },
+  { "word": "duck", "ipa": "/dʌk/", "pos": "n.", "chinese": "鸭", "core": "Quack!", "logic": "黄色的水中小：A yellow ____.", "example": "The duck is swimming." },
+  { "word": "sea", "ipa": "/siː/", "pos": "n.", "chinese": "海；海洋", "core": "Deep Blue Sea", "logic": "巨大的蓝色水池：The ____ is blue.", "example": "Swim in the sea." },
+  { "word": "some", "ipa": "/səm/", "pos": "adj.", "chinese": "一些", "core": "A Little", "logic": "不是一个，是几个：____ flowers.", "example": "I have some pencils." },
+  { "word": "pink", "ipa": "/pɪŋk/", "pos": "adj./n.", "chinese": "粉色(的)", "core": "Pink Flower", "logic": "甜美的颜色：A ____ dress.", "example": "She likes pink." },
+  { "word": "draw", "ipa": "/drɔː/", "logic": "拿笔画画：____ a picture.", "chinese": "画", "core": "Artist", "example": "I can draw a cat." },
+  { "word": "white", "ipa": "/waɪt/", "pos": "adj./n.", "chinese": "白色(的)", "core": "White Snow", "logic": "云朵和雪的颜色：A ____ rabbit.", "example": "The paper is white." },
+  { "word": "black", "ipa": "/blæk/", "pos": "adj./n.", "chinese": "黑色(的)", "core": "Black Night", "logic": "夜晚和熊猫的颜色：A ____ cat.", "example": "Black and white." }
+]
