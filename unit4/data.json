@@ -1,0 +1,20 @@
+[
+  { "word": "apple", "ipa": "/ˈæpl/", "pos": "n.", "chinese": "苹果", "core": "Red Apple", "logic": "红彤彤的：An ____ a day.", "example": "I like red apples." },
+  { "word": "banana", "ipa": "/bəˈnɑːnə/", "pos": "n.", "chinese": "香蕉", "core": "Yellow Banana", "logic": "弯弯的：The ____ is sweet.", "example": "Monkeys like bananas." },
+  { "word": "farm", "ipa": "/fɑːm/", "pos": "n.", "chinese": "农场", "core": "On the Farm", "logic": "种菜养鸡的地方：Old MacDonald has a ____.", "example": "Let's go to the farm." },
+  { "word": "air", "ipa": "/eə(r)/", "pos": "n.", "chinese": "空气", "core": "Fresh Air", "logic": "植物呼吸需要：Fresh ____.", "example": "Plants need air." },
+  { "word": "orange", "ipa": "/ˈɒrɪndʒ/", "pos": "n.", "chinese": "橙子", "core": "Juicy Orange", "logic": "酸酸甜甜：An ____ is round.", "example": "I want an orange." },
+  { "word": "grape", "ipa": "/ɡreɪp/", "pos": "n.", "chinese": "葡萄", "core": "Purple Grapes", "logic": "一串串的：I like purple ____s.", "example": "The grapes are sweet." },
+  { "word": "school", "ipa": "/skuːl/", "pos": "n.", "chinese": "学校", "core": "Go to School", "logic": "学习的地方：I go to ____.", "example": "Our school is beautiful." },
+  { "word": "garden", "ipa": "/ˈɡɑːdn/", "pos": "n.", "chinese": "花园", "core": "In the Garden", "logic": "种花的地方：There are flowers in the ____.", "example": "Look at my garden." },
+  { "word": "need", "ipa": "/niːd/", "pos": "v.", "chinese": "需要", "core": "I Need", "logic": "必不可少：Flowers ____ water.", "example": "Do you need help?" },
+  { "word": "water", "ipa": "/ˈwɔːtə(r)/", "pos": "v./n.", "chinese": "给...浇水/水", "core": "Watering", "logic": "渴了就要：____ the plants.", "example": "Plants need water." },
+  { "word": "flower", "ipa": "/ˈflaʊə(r)/", "pos": "n.", "chinese": "花", "core": "Pretty Flower", "logic": "香喷喷的：A red ____.", "example": "The flower is beautiful." },
+  { "word": "grass", "ipa": "/ɡrɑːs/", "pos": "n.", "chinese": "草", "core": "Green Grass", "logic": "绿油油的：Don't walk on the ____.", "example": "The rabbit eats grass." },
+  { "word": "plant", "ipa": "/plɑːnt/", "pos": "v./n.", "chinese": "种植/植物", "core": "Little Plant", "logic": "动手种下：____ a tree.", "example": "This is a small plant." },
+  { "word": "new", "ipa": "/njuː/", "pos": "adj.", "chinese": "新的", "core": "Brand New", "logic": "不是旧的：A ____ schoolbag.", "example": "I have a new friend." },
+  { "word": "tree", "ipa": "/triː/", "pos": "n.", "chinese": "树", "core": "Tall Tree", "logic": "高高的：Birds live in the ____.", "example": "The tree is green." },
+  { "word": "sun", "ipa": "/sʌn/", "pos": "n.", "chinese": "阳光/太阳", "core": "The Sun", "logic": "暖洋洋的：The ____ is hot.", "example": "Plants need the sun." },
+  { "word": "give", "ipa": "/ɡɪv/", "pos": "v.", "chinese": "给", "core": "Give Me", "logic": "分享动作：____ me an apple.", "example": "Please give it to me." },
+  { "word": "them", "ipa": "/ðəm/", "pos": "pron.", "chinese": "它们", "core": "They/Them", "logic": "指代那些东西：Give ____ water.", "example": "I like them." }
+]
