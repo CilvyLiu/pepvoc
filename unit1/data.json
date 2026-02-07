@@ -1,0 +1,17 @@
+[
+  { "word": "name", "ipa": "/neɪm/", "pos": "n.", "chinese": "名字", "core": "My Name", "logic": "自我介绍第一句：My ____ is Nova.", "example": "What is your name?" },
+  { "word": "nice", "ipa": "/naɪs/", "pos": "adj.", "chinese": "友好的", "core": "So Nice", "logic": "初次见面的礼貌：____ to meet you!", "example": "He is a nice boy." },
+  { "word": "ear", "ipa": "/ɪə(r)/", "pos": "n.", "chinese": "耳朵", "core": "Listen!", "logic": "我有两只灵敏的：I hear with my ____s.", "example": "Touch your ears." },
+  { "word": "hand", "ipa": "/hænd/", "pos": "n.", "chinese": "手", "core": "Clap!", "logic": "拍拍你的小：Clap your ____s!", "example": "Wash your hands." },
+  { "word": "eye", "ipa": "/aɪ/", "pos": "n.", "chinese": "眼睛", "core": "Look!", "logic": "亮晶晶的：I see with my ____s.", "example": "Close your eyes." },
+  { "word": "mouth", "ipa": "/maʊθ/", "pos": "n.", "chinese": "嘴", "core": "Speak!", "logic": "说话和吃饭靠：Open your ____.", "example": "Point to your mouth." },
+  { "word": "arm", "ipa": "/ɑːm/", "pos": "n.", "chinese": "胳膊", "core": "Strong!", "logic": "长长的：Wave your ____s.", "example": "I have two long arms." },
+  { "word": "can", "ipa": "/kæn/", "pos": "v.aux.", "chinese": "可以", "core": "Yes, I can!", "logic": "我会做某事：I ____ swim.", "example": "Can you help me?" },
+  { "word": "share", "ipa": "/ʃeə(r)/", "pos": "v.", "chinese": "分享", "core": "Give Half", "logic": "好朋友要：Let's ____ the toys.", "example": "Please share your apple." },
+  { "word": "smile", "ipa": "/smaɪl/", "pos": "v./n.", "chinese": "微笑", "core": "Happy Face", "logic": "开心就露出：Give me a big ____!", "example": "She has a sweet smile." },
+  { "word": "listen", "ipa": "/lɪsn/", "pos": "v.", "chinese": "听", "core": "Listen!", "logic": "仔细倾听：Please ____ to the teacher.", "example": "Listen to the music." },
+  { "word": "help", "ipa": "/help/", "pos": "v.", "chinese": "帮助", "core": "Helping Hand", "logic": "当你遇到困难：Can you ____ me?", "example": "I help my mum." },
+  { "word": "say", "ipa": "/seɪ/", "pos": "v.", "chinese": "说", "core": "Say Hello", "logic": "大声说出：____ hello to your friend.", "example": "What did you say?" },
+  { "word": "friend", "ipa": "/frend/", "pos": "n.", "chinese": "朋友", "core": "Best Friend", "logic": "一起玩的小伙伴：You are my best ____.", "example": "We are good friends." },
+  { "word": "good", "ipa": "/ɡʊd/", "pos": "adj.", "chinese": "好的", "core": "Thumbs Up!", "logic": "做得好：You did a ____ job!", "example": "Good morning!" }
+]
