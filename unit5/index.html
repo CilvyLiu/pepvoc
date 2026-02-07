@@ -57,25 +57,36 @@
         const logicEl = document.getElementById('logic-display');
         const container = document.getElementById('container');
 
+        // --- 核心：跨平台音频预热 (针对 iOS/安卓) ---
         function unlockAudio() {
-            const silent = new SpeechSynthesisUtterance("");
-            window.speechSynthesis.speak(silent);
+            const msg = new SpeechSynthesisUtterance("");
+            window.speechSynthesis.speak(msg);
+            // 移除监听，防止重复触发
             document.removeEventListener('touchstart', unlockAudio);
+            document.removeEventListener('click', unlockAudio); 
         }
+        // 苹果手机增加 click 监听更稳妥
         document.addEventListener('touchstart', unlockAudio);
-
+        document.addEventListener('click', unlockAudio);
+        
+        // --- 核心：标准英音播放 (强制 Type 2) ---
         function playUK(text) {
+            // 强制使用 type=2 (英音)
             const audioUrl = `https://dict.youdao.com/dictvoice?audio=${encodeURIComponent(text)}&type=2`;
             const audio = new Audio(audioUrl);
-            audio.play().catch(() => {
-                window.speechSynthesis.cancel();
-                const speech = new SpeechSynthesisUtterance(text);
-                speech.lang = 'en-GB'; 
-                speech.rate = 0.85; 
-                window.speechSynthesis.speak(speech);
-            });
+            
+            const playPromise = audio.play();
+            if (playPromise !== undefined) {
+                playPromise.catch(() => {
+                    // 如果接口被屏蔽或离线，强制调用系统 en-GB
+                    window.speechSynthesis.cancel();
+                    const speech = new SpeechSynthesisUtterance(text);
+                    speech.lang = 'en-GB'; 
+                    speech.rate = 0.8; 
+                    window.speechSynthesis.speak(speech);
+                });
+            }
         }
-
         function activate(item, el) {
             wordEl.innerText = item.word;
             logicEl.innerText = `${item.chinese} | ${item.logic}`;
