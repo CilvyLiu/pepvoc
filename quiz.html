@@ -82,28 +82,30 @@
         let currentIdx = 0;
         let score = 0;
 
-        // 核心发音逻辑：强制标准英音
+        // 核心发音逻辑：强制标准英音 + 苹果兼容增强
         function speakUK(text) {
-            // 接口 1: 有道标准英音
+            // 接口 1: 有道标准英音 (type=2 强制英音)
             const audioUrl = `https://dict.youdao.com/dictvoice?audio=${encodeURIComponent(text)}&type=2`;
             const audio = new Audio(audioUrl);
             
             const playPromise = audio.play();
             if (playPromise !== undefined) {
                 playPromise.catch(() => {
-                    // 接口 2: 系统 TTS 兜底（强制 en-GB）
+                    // 接口 2: 系统 TTS 兜底（强制指定 en-GB 英式发音）
                     window.speechSynthesis.cancel();
                     const msg = new SpeechSynthesisUtterance(text);
-                    msg.lang = 'en-GB';
-                    msg.rate = 0.8;
+                    msg.lang = 'en-GB'; 
+                    msg.rate = 0.8; 
                     window.speechSynthesis.speak(msg);
                 });
             }
         }
 
         async function prepareQuiz() {
-            // 解锁 iOS 音频权限
+            // --- 关键：点击瞬间解锁 iOS/手机 浏览器的音频权限 ---
             window.speechSynthesis.speak(new SpeechSynthesisUtterance(""));
+            const silentAudio = new Audio("data:audio/wav;base64,UklGRigAAABXQVZFZm10IBAAAAABAAEARKwAAIhYAQACABAAZGF0YQQAAAAAAP8A");
+            silentAudio.play().catch(()=>{});
 
             const mode = document.getElementById('type-select').value;
             const range = document.getElementById('range-select').value;
@@ -152,7 +154,6 @@
             
             document.getElementById('current-idx').innerText = currentIdx + 1;
             
-            // 如果是句子模式，显示场景标签
             const sceneTag = document.getElementById('scene-tag');
             if (!isWord && item.scene) {
                 sceneTag.innerText = `🎬 场景：${item.scene}`;
@@ -163,7 +164,6 @@
 
             document.getElementById('question-box').innerText = `“${chineseText}”的正确英文是？`;
             
-            // 生成干扰项
             let distractors = quizPool
                 .filter(i => (isWord ? i.word : i.en) !== correctText)
                 .sort(() => Math.random() - 0.5)
@@ -189,7 +189,7 @@
             if (selected === correct) {
                 btn.classList.add('correct');
                 score += (100 / quizPool.length);
-                speakUK(correct); // 强制播放英音
+                speakUK(correct); // 答对即播放强制英音
             } else {
                 btn.classList.add('wrong');
                 document.querySelectorAll('.option-btn').forEach(b => {
