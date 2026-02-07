@@ -3,24 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Nova's Junior Lab | 综合测验中心</title>
+    <title>Nova's Junior Lab | 单元测验</title>
     <style>
-        :root { --primary: #4D96FF; --secondary: #9B59B6; --success: #6BCB77; --bg: #F0F2F5; }
-        body { font-family: 'system-ui', sans-serif; background: var(--bg); margin: 0; padding: 20px; display: flex; flex-direction: column; align-items: center; }
+        :root { --primary: #4D96FF; --success: #6BCB77; --bg: #F0F2F5; }
+        body { font-family: 'Comic Sans MS', 'Helvetica', sans-serif; background: var(--bg); margin: 0; padding: 20px; display: flex; flex-direction: column; align-items: center; }
         
-        .mode-selector { display: flex; gap: 10px; margin-bottom: 20px; background: #ddd; padding: 5px; border-radius: 50px; }
-        .mode-btn { border: none; padding: 10px 25px; border-radius: 40px; cursor: pointer; font-weight: bold; transition: 0.3s; background: transparent; color: #666; }
-        .mode-btn.active { background: white; color: var(--primary); box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
-
-        .quiz-container { background: white; width: 100%; max-width: 500px; border-radius: 24px; padding: 25px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
-        .progress { color: #888; font-size: 14px; margin-bottom: 10px; font-weight: bold; }
-        .scene-tag { background: #F0F7FF; color: #4D96FF; padding: 4px 12px; border-radius: 50px; font-size: 12px; margin-bottom: 10px; display: none; }
+        /* 设置界面 */
+        .setup-container { background: white; width: 100%; max-width: 500px; border-radius: 24px; padding: 30px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); text-align: center; box-sizing: border-box; }
+        .setup-group { margin: 20px 0; text-align: left; }
+        label { font-weight: bold; color: #555; display: block; margin-bottom: 10px; font-size: 14px; }
+        select { width: 100%; padding: 15px; border-radius: 15px; border: 2px solid #F0F0F0; font-size: 16px; outline: none; background: #FAFAFA; cursor: pointer; }
         
-        #question-box { font-size: 22px; font-weight: bold; color: #2D3436; margin-bottom: 20px; min-height: 60px; line-height: 1.4; }
+        /* 测验容器 */
+        .quiz-container { display: none; background: white; width: 100%; max-width: 500px; border-radius: 24px; padding: 25px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); box-sizing: border-box; }
+        .progress { color: #AAA; font-size: 13px; margin-bottom: 15px; letter-spacing: 1px; }
+        .scene-box { background: #E8F2FF; color: #4D96FF; padding: 5px 15px; border-radius: 50px; font-size: 13px; font-weight: bold; display: inline-block; margin-bottom: 15px; }
+        
+        #question-box { font-size: 22px; font-weight: bold; color: #2D3436; margin-bottom: 25px; line-height: 1.5; }
         
         .options-grid { display: grid; gap: 12px; }
         .option-btn { 
-            background: #F8F9FA; border: 2px solid #EEE; padding: 15px; border-radius: 15px; 
+            background: #FFF; border: 2px solid #F0F0F0; padding: 18px; border-radius: 18px; 
             text-align: left; font-size: 17px; cursor: pointer; transition: 0.2s; color: #444;
             -webkit-tap-highlight-color: transparent;
         }
@@ -28,94 +31,146 @@
         .option-btn.wrong { background: #FF6B6B !important; color: white !important; border-color: #FF6B6B !important; }
 
         .score-panel { text-align: center; display: none; }
-        .score-val { font-size: 60px; color: var(--primary); font-weight: 900; }
-        .btn-action { background: var(--primary); color: white; border: none; padding: 15px 40px; border-radius: 50px; font-size: 18px; margin-top: 20px; cursor: pointer; font-weight: bold; }
+        .btn-start { background: var(--primary); color: white; border: none; padding: 18px; border-radius: 50px; font-size: 18px; cursor: pointer; font-weight: bold; width: 100%; margin-top: 10px; transition: 0.3s; }
+        .btn-start:active { transform: scale(0.95); opacity: 0.9; }
     </style>
 </head>
 <body>
 
-    <h1>🚀 测验挑战中心</h1>
+    <h1>🚀 测验中心</h1>
 
-    <div class="mode-selector" id="mode-ui">
-        <button class="mode-btn active" onclick="switchMode('words')">单词测试</button>
-        <button class="mode-btn" onclick="switchMode('phrases')">表达实战</button>
+    <div class="setup-container" id="setup-ui">
+        <div class="setup-group">
+            <label>请选择测试类型：</label>
+            <select id="type-select">
+                <option value="words">🔤 单词辨析 (Vocabulary)</option>
+                <option value="phrases">🗣️ 常用表达 (Expressions)</option>
+            </select>
+        </div>
+        <div class="setup-group">
+            <label>请选择测试范围：</label>
+            <select id="range-select">
+                <option value="all">🌟 全册综合挑战</option>
+                <option value="1">Unit 1: Hello!</option>
+                <option value="2">Unit 2: Family</option>
+                <option value="3">Unit 3: Zoo</option>
+                <option value="4">Unit 4: Farm</option>
+                <option value="5">Unit 5: Colours</option>
+                <option value="6">Unit 6: Birthday</option>
+            </select>
+        </div>
+        <button class="btn-start" onclick="prepareQuiz()">开始挑战 (开启英音模式)</button>
     </div>
 
     <div class="quiz-container" id="quiz-ui">
-        <div class="progress">Question <span id="current-idx">1</span> / 10</div>
-        <div id="scene-tag" class="scene-tag"></div>
-        <div id="question-box">准备中...</div>
+        <div class="progress">QUESTION <span id="current-idx">1</span> / <span id="total-cnt">10</span></div>
+        <div id="scene-tag" class="scene-box" style="display:none;"></div>
+        <div id="question-box">Loading...</div>
         <div class="options-grid" id="options"></div>
     </div>
 
     <div class="quiz-container score-panel" id="score-ui">
-        <h2>🎉 挑战完成!</h2>
-        <div class="score-val" id="final-score">0</div>
-        <p id="score-msg">Well done!</p>
-        <button class="btn-action" onclick="location.reload()">重新开始</button>
-        <br>
-        <button class="btn-action" style="background:#2D3436; margin-top: 10px;" onclick="location.href='index.html'">返回首页</button>
+        <h2>测验完成!</h2>
+        <div style="font-size:70px; color:var(--primary); font-weight:900; margin: 20px 0;" id="final-score">0</div>
+        <p id="score-msg" style="color: #666; margin-bottom: 30px;"></p>
+        <button class="btn-start" onclick="location.reload()">再来一局</button>
+        <button class="btn-start" style="background:#2D3436; margin-top: 15px;" onclick="location.href='index.html'">返回主页</button>
     </div>
 
     <script>
-        let currentMode = 'words'; // 'words' or 'phrases'
         let quizPool = [];
-        let currentQuestion = 0;
+        let currentIdx = 0;
         let score = 0;
 
+        // 核心发音逻辑：强制标准英音
         function speakUK(text) {
+            // 接口 1: 有道标准英音
             const audioUrl = `https://dict.youdao.com/dictvoice?audio=${encodeURIComponent(text)}&type=2`;
             const audio = new Audio(audioUrl);
-            audio.play().catch(() => {
-                window.speechSynthesis.cancel();
-                const speech = new SpeechSynthesisUtterance(text);
-                speech.lang = 'en-GB';
-                speech.rate = 0.85;
-                window.speechSynthesis.speak(speech);
-            });
+            
+            const playPromise = audio.play();
+            if (playPromise !== undefined) {
+                playPromise.catch(() => {
+                    // 接口 2: 系统 TTS 兜底（强制 en-GB）
+                    window.speechSynthesis.cancel();
+                    const msg = new SpeechSynthesisUtterance(text);
+                    msg.lang = 'en-GB';
+                    msg.rate = 0.8;
+                    window.speechSynthesis.speak(msg);
+                });
+            }
         }
 
-        async function switchMode(mode) {
-            currentMode = mode;
-            currentQuestion = 0;
-            score = 0;
+        async function prepareQuiz() {
+            // 解锁 iOS 音频权限
+            window.speechSynthesis.speak(new SpeechSynthesisUtterance(""));
+
+            const mode = document.getElementById('type-select').value;
+            const range = document.getElementById('range-select').value;
             
-            // UI 更新
-            document.querySelectorAll('.mode-btn').forEach(b => b.classList.toggle('active', b.innerText.includes(mode==='words'?'单词':'表达')));
-            document.getElementById('scene-tag').style.display = (mode === 'phrases') ? 'inline-block' : 'none';
-            
-            if (mode === 'words') {
-                const units = [1, 2, 3, 4, 5, 6];
-                const results = await Promise.all(units.map(u => fetch(`./unit${u}/data.json`).then(r => r.json())));
-                quizPool = results.flat().sort(() => Math.random() - 0.5).slice(0, 10);
-            } else {
-                const res = await fetch('expressions_data.json');
-                const data = await res.json();
-                quizPool = Object.values(data).flat().sort(() => Math.random() - 0.5).slice(0, 10);
+            try {
+                if (mode === 'words') {
+                    // 逻辑：读取 unitX/data.json
+                    const units = range === 'all' ? [1,2,3,4,5,6] : [parseInt(range)];
+                    const results = await Promise.all(units.map(u => fetch(`./unit${u}/data.json`).then(r => r.json())));
+                    quizPool = results.flat();
+                } else {
+                    // 逻辑：读取根目录 expressions_data.json 并筛选单元
+                    const res = await fetch('expressions_data.json');
+                    const data = await res.json();
+                    if (range === 'all') {
+                        quizPool = Object.values(data).flat();
+                    } else {
+                        quizPool = data[`unit${range}`] || [];
+                    }
+                }
+
+                if (!quizPool || quizPool.length === 0) {
+                    alert("该单元暂无内容，请检查数据文件！");
+                    return;
+                }
+
+                // 随机洗牌并取 10 题
+                quizPool.sort(() => Math.random() - 0.5);
+                quizPool = quizPool.slice(0, 10);
+
+                document.getElementById('setup-ui').style.display = 'none';
+                document.getElementById('quiz-ui').style.display = 'block';
+                document.getElementById('total-cnt').innerText = quizPool.length;
+                showQuestion();
+            } catch (err) {
+                alert("加载失败：请确认 data.json 或 expressions_data.json 路径正确");
+                console.error(err);
             }
-            showQuestion();
         }
 
         function showQuestion() {
-            const item = quizPool[currentQuestion];
-            document.getElementById('current-idx').innerText = currentQuestion + 1;
+            const item = quizPool[currentIdx];
+            const isWord = !!item.word; // 判断是单词还是表达
+            const correctText = isWord ? item.word : item.en;
+            const chineseText = isWord ? item.chinese : item.zh;
             
-            if (currentMode === 'words') {
-                document.getElementById('question-box').innerText = `“${item.chinese}”的英文是？`;
+            document.getElementById('current-idx').innerText = currentIdx + 1;
+            
+            // 如果是句子模式，显示场景标签
+            const sceneTag = document.getElementById('scene-tag');
+            if (!isWord && item.scene) {
+                sceneTag.innerText = `🎬 场景：${item.scene}`;
+                sceneTag.style.display = 'inline-block';
             } else {
-                document.getElementById('scene-tag').innerText = `场景：${item.scene || '日常交流'}`;
-                document.getElementById('question-box').innerText = `你想说：“${item.zh}”`;
+                sceneTag.style.display = 'none';
             }
+
+            document.getElementById('question-box').innerText = `“${chineseText}”的正确英文是？`;
             
             // 生成干扰项
-            const correctKey = currentMode === 'words' ? 'word' : 'en';
             let distractors = quizPool
-                .filter(w => w[correctKey] !== item[correctKey])
+                .filter(i => (isWord ? i.word : i.en) !== correctText)
                 .sort(() => Math.random() - 0.5)
                 .slice(0, 3)
-                .map(w => w[correctKey]);
+                .map(i => isWord ? i.word : i.en);
             
-            let choices = [...distractors, item[correctKey]].sort(() => Math.random() - 0.5);
+            let choices = [...distractors, correctText].sort(() => Math.random() - 0.5);
             
             const optionsDiv = document.getElementById('options');
             optionsDiv.innerHTML = "";
@@ -123,7 +178,7 @@
                 const btn = document.createElement('button');
                 btn.className = 'option-btn';
                 btn.innerText = choice;
-                btn.onclick = () => checkAnswer(choice, item[correctKey], btn);
+                btn.onclick = () => checkAnswer(choice, correctText, btn);
                 optionsDiv.appendChild(btn);
             });
         }
@@ -133,8 +188,8 @@
 
             if (selected === correct) {
                 btn.classList.add('correct');
-                score += 10;
-                speakUK(correct);
+                score += (100 / quizPool.length);
+                speakUK(correct); // 强制播放英音
             } else {
                 btn.classList.add('wrong');
                 document.querySelectorAll('.option-btn').forEach(b => {
@@ -143,25 +198,22 @@
             }
 
             setTimeout(() => {
-                currentQuestion++;
-                if (currentQuestion < quizPool.length) {
+                currentIdx++;
+                if (currentIdx < quizPool.length) {
                     showQuestion();
                 } else {
-                    document.getElementById('quiz-ui').style.display = 'none';
-                    document.getElementById('mode-ui').style.display = 'none';
-                    document.getElementById('score-ui').style.display = 'block';
-                    document.getElementById('final-score').innerText = score;
+                    showFinalResult();
                 }
             }, 1500);
         }
 
-        // 初始化加载单词模式
-        switchMode('words');
-
-        // 解锁音频
-        document.addEventListener('touchstart', () => {
-            window.speechSynthesis.speak(new SpeechSynthesisUtterance(""));
-        }, { once: true });
+        function showFinalResult() {
+            document.getElementById('quiz-ui').style.display = 'none';
+            document.getElementById('score-ui').style.display = 'block';
+            const final = Math.round(score);
+            document.getElementById('final-score').innerText = final;
+            document.getElementById('score-msg').innerText = final >= 80 ? "Excellent! 你对英式英语掌握得真棒！" : "Keep trying! 多听听标准英音会进步更快哦！";
+        }
     </script>
 </body>
 </html>
