@@ -1,0 +1,21 @@
+[
+  { "word": "mum", "ipa": "/mʌm/", "pos": "n.", "chinese": "妈妈", "core": "Sweet Mum", "logic": "口语，在家叫妈妈：I love my ____.", "example": "This is my mum." },
+  { "word": "dad", "ipa": "/dæd/", "pos": "n.", "chinese": "爸爸", "core": "Super Dad", "logic": "口语，在家叫爸爸：My ____ is tall.", "example": "Dad, let's play!" },
+  { "word": "grandma", "ipa": "/ˈɡrænmɑː/", "pos": "n.", "chinese": "奶奶；姥姥", "core": "Grandma", "logic": "口语，亲切地叫：My ____ makes cakes.", "example": "I love my grandma." },
+  { "word": "grandpa", "ipa": "/ˈɡrænpɑː/", "pos": "n.", "chinese": "爷爷；姥爷", "core": "Grandpa", "logic": "口语，亲切地叫：My ____ is funny.", "example": "Grandpa, look at me!" },
+  { "word": "grandfather", "ipa": "/ˈɡrænfɑːðə(r)/", "pos": "n.", "chinese": "（外）祖父", "core": "Grandfather", "logic": "正式称呼：This is my ____.", "example": "My grandfather is seventy." },
+  { "word": "grandmother", "ipa": "/ˈɡrænmʌðə(r)/", "pos": "n.", "chinese": "（外）祖母", "core": "Grandmother", "logic": "正式称呼：This is my ____.", "example": "My grandmother is kind." },
+  { "word": "mother", "ipa": "/ˈmʌðə(r)/", "pos": "n.", "chinese": "母亲", "core": "Mother", "logic": "正式称呼：She is a teacher and a ____.", "example": "Who is your mother?" },
+  { "word": "father", "ipa": "/ˈfɑːðə(r)/", "pos": "n.", "chinese": "父亲", "core": "Father", "logic": "正式称呼：My ____ is at home.", "example": "His father is a doctor." },
+  { "word": "me", "ipa": "/miː/", "pos": "pron.", "chinese": "我", "core": "Look at me", "logic": "指着自己：Look at ____!", "example": "This is a photo of me." },
+  { "word": "sister", "ipa": "/sɪstə(r)/", "pos": "n.", "chinese": "姐；妹", "core": "Sister", "logic": "家里的女孩：I have a little ____.", "example": "My sister is cute." },
+  { "word": "family", "ipa": "/fæməli/", "pos": "n.", "chinese": "家；家庭", "core": "My Family", "logic": "全家福：I love my ____.", "example": "We are a big family." },
+  { "word": "have", "ipa": "/hæv/", "pos": "v.", "chinese": "有", "core": "I Have", "logic": "表示拥有：I ____ a big brother.", "example": "Do you have a pet?" },
+  { "word": "big", "ipa": "/bɪɡ/", "pos": "adj.", "chinese": "大的", "core": "So Big!", "logic": "形容个头：A ____ elephant.", "example": "My family is big." },
+  { "word": "cousin", "ipa": "/ˈkʌzn/", "pos": "n.", "chinese": "堂(表)兄弟姐妹", "core": "Cousin", "logic": "亲戚家的小伙伴：My ____ is seven.", "example": "Let's play with our cousin." },
+  { "word": "brother", "ipa": "/ˈbrʌðə(r)/", "pos": "n.", "chinese": "哥；弟", "core": "Brother", "logic": "家里的男孩：My ____ is a student.", "example": "Do you have a brother?" },
+  { "word": "baby", "ipa": "/ˈbeɪbi/", "pos": "n.", "chinese": "婴儿", "core": "Little Baby", "logic": "可爱的小宝宝：The ____ is sleeping.", "example": "Look at the baby!" },
+  { "word": "uncle", "ipa": "/ˈʌŋkl/", "pos": "n.", "chinese": "叔父；舅父等", "core": "Uncle", "logic": "爸爸或妈妈的兄弟：My ____ is cool.", "example": "This is my Uncle Li." },
+  { "word": "aunt", "ipa": "/ɑːnt/", "pos": "n.", "chinese": "婶母；舅母等", "core": "Aunt", "logic": "爸爸或妈妈的姐妹：My ____ is kind.", "example": "I visit my aunt." },
+  { "word": "small", "ipa": "/smɔːl/", "pos": "adj.", "chinese": "小的", "core": "So Small", "logic": "形容个头：A ____ mouse.", "example": "It's a small box." }
+]
