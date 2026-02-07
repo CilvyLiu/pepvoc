@@ -1,0 +1,18 @@
+[
+  { "word": "old", "ipa": "/əʊld/", "pos": "adj.", "chinese": "岁;年纪;旧的", "core": "How Old", "logic": "询问年龄：How ____ are you?", "example": "I am eight years old." },
+  { "word": "five", "ipa": "/faɪv/", "pos": "num.", "chinese": "五", "core": "Number 5", "logic": "一只手有五个手指：I have ____ fingers.", "example": "Five little ducks." },
+  { "word": "year", "ipa": "/jɪə(r)/", "pos": "n.", "chinese": "年纪;年", "core": "Years Old", "logic": "年龄单位：I am eight ____s old.", "example": "A year has four seasons." },
+  { "word": "one", "ipa": "/wʌn/", "pos": "num.", "chinese": "一", "core": "Number 1", "logic": "数字的开始：____, two, three.", "example": "I have one nose." },
+  { "word": "two", "ipa": "/tuː/", "pos": "num.", "chinese": "二", "core": "Number 2", "logic": "我有两只眼睛：I have ____ eyes.", "example": "Two birds in the tree." },
+  { "word": "three", "ipa": "/θriː/", "pos": "num.", "chinese": "三", "core": "Number 3", "logic": "三角形有三条边：____ little pigs.", "example": "Three books on the desk." },
+  { "word": "four", "ipa": "/fɔː(r)/", "pos": "num.", "chinese": "四", "core": "Number 4", "logic": "小狗有四条腿：A dog has ____ legs.", "example": "Four apples please." },
+  { "word": "ten", "ipa": "/ten/", "pos": "num.", "chinese": "十", "core": "Number 10", "logic": "双手的指头：I have ____ toes.", "example": "Ten, nine, eight..." },
+  { "word": "six", "ipa": "/sɪks/", "pos": "num.", "chinese": "六", "core": "Number 6", "logic": "五加一等于：____ pencils.", "example": "I see six monkeys." },
+  { "word": "seven", "ipa": "/ˈsevn/", "pos": "num.", "chinese": "七", "core": "Number 7", "logic": "一周有七天：____ days a week.", "example": "Seven rainbow colours." },
+  { "word": "eight", "ipa": "/eɪt/", "pos": "num.", "chinese": "八", "core": "Number 8", "logic": "小蜘蛛有八条腿：An octopus has ____ legs.", "example": "I am eight years old." },
+  { "word": "nine", "ipa": "/naɪn/", "pos": "num.", "chinese": "九", "core": "Number 9", "logic": "十减一等于：____ balloons.", "example": "Nine cats on the wall." },
+  { "word": "o'clock", "ipa": "/əˈklɒk/", "pos": "adv.", "chinese": "...点钟", "core": "Time", "logic": "整点时间：It is eight ____.", "example": "Let's go at one o'clock." },
+  { "word": "cut", "ipa": "/kʌt/", "pos": "v.", "chinese": "切块", "core": "Cut it", "logic": "分享派对食物：____ the cake.", "example": "Can you cut the bread?" },
+  { "word": "eat", "ipa": "/iːt/", "pos": "v.", "chinese": "吃", "core": "Yummy!", "logic": "美味时刻：Let's ____ the cake.", "example": "I eat an apple every day." },
+  { "word": "cake", "ipa": "/keɪk/", "pos": "n.", "chinese": "蛋糕", "core": "Birthday Cake", "logic": "生日必备：A big birthday ____.", "example": "I like chocolate cake." }
+]
