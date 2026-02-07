@@ -1,0 +1,44 @@
+{
+  "unit1": [
+    {"en": "Hello! I'm Mike Black.", "zh": "你好！我是迈克·布莱克。", "scene": "自我介绍"},
+    {"en": "Hi! My name is Wu Binbin.", "zh": "嗨！我叫吴斌斌。", "scene": "打招呼"},
+    {"en": "Nice to meet you.", "zh": "见到你很高兴。", "scene": "初次见面"},
+    {"en": "Nice to meet you too.", "zh": "见到你我也很高兴。", "scene": "礼貌回应"},
+    {"en": "Oh no!", "zh": "噢，不！", "scene": "发生意外时"},
+    {"en": "It's OK, Chen Jie.", "zh": "没关系，陈杰。", "scene": "安慰朋友"},
+    {"en": "Hey, Sarah! We can share.", "zh": "嘿，萨拉！我们可以分享。", "scene": "分享玩具或食物"},
+    {"en": "I am nice to my friends.", "zh": "我对我的朋友们很好。", "scene": "夸夸自己"}
+  ],
+  "unit2": [
+    {"en": "This is my grandma.", "zh": "这是我的奶奶。", "scene": "介绍家人"},
+    {"en": "Look! This is my family.", "zh": "看！这是我的家庭。", "scene": "展示全家福"},
+    {"en": "Is that your brother?", "zh": "那是你弟弟吗？", "scene": "询问对方"},
+    {"en": "Yes, it is.", "zh": "对，是的。", "scene": "肯定回答"},
+    {"en": "They love each other.", "zh": "他们相互关爱。", "scene": "温馨的家庭"}
+  ],
+  "unit3": [
+    {"en": "Good morning! Come in.", "zh": "早上好! 进来吧。", "scene": "迎接客人"},
+    {"en": "Do you have a pet?", "zh": "你有宠物吗？", "scene": "聊天话题"},
+    {"en": "Let's go to the zoo!", "zh": "我们一起去动物园吧！", "scene": "提议去玩"},
+    {"en": "What's this? It's a fox.", "zh": "这是什么？是只狐狸。", "scene": "指着近处问"},
+    {"en": "What's that? It's a red panda.", "zh": "那是什么？是只小熊猫。", "scene": "指着远处问"}
+  ],
+  "unit4": [
+    {"en": "Mike, do you like apples?", "zh": "迈克，你喜欢苹果吗？", "scene": "询问喜好"},
+    {"en": "I like the fresh air.", "zh": "我喜欢新鲜的空气。", "scene": "在农场感受"},
+    {"en": "We can plant new trees.", "zh": "我们可以新种些树。", "scene": "保护自然"},
+    {"en": "Plants can give us many things.", "zh": "植物能提供很多东西。", "scene": "自然常识"}
+  ],
+  "unit5": [
+    {"en": "What colour is it? It's orange.", "zh": "它是什么颜色？它是橙红色。", "scene": "颜色问答"},
+    {"en": "Red and blue make purple.", "zh": "红色加蓝色是紫色。", "scene": "颜色魔术"},
+    {"en": "Let's draw some purple birds.", "zh": "我们一起画一些紫色的鸟吧。", "scene": "画画时间"},
+    {"en": "Be careful!", "zh": "小心！", "scene": "安全提醒"}
+  ],
+  "unit6": [
+    {"en": "How old are you? I'm five.", "zh": "你几岁了？我五岁。", "scene": "询问年龄"},
+    {"en": "How many apples? Two.", "zh": "几个苹果？两个。", "scene": "数数看"},
+    {"en": "Here you are.", "zh": "给您。", "scene": "递东西时说"},
+    {"en": "Happy birthday!", "zh": "生日快乐！", "scene": "庆祝时刻"}
+  ]
+}
