@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nova's Junior Lab | 词汇探索上册</title>
+    <style>
+        :root {
+            --u1: #FF6B6B; --u2: #4D96FF; --u3: #6BCB77;
+            --u4: #FFD93D; --u5: #9B59B6; --u6: #FF9F43;
+            --bg: #F0F2F5;
+        }
+        body { font-family: 'Comic Sans MS', 'zcool-gdt', sans-serif; background: var(--bg); margin: 0; padding: 20px; text-align: center; }
+        h1 { color: #2D3436; margin-bottom: 30px; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 20px; max-width: 800px; margin: 0 auto; }
+        .unit-card {
+            background: white; border-radius: 20px; padding: 20px; cursor: pointer;
+            box-shadow: 0 10px 0 rgba(0,0,0,0.05); transition: 0.2s;
+            border: 3px solid transparent;
+        }
+        .unit-card:hover { transform: translateY(-5px); }
+        .unit-card h2 { margin: 10px 0; font-size: 1.2em; }
+        .unit-card p { font-size: 0.9em; opacity: 0.7; }
+        
+        /* 针对不同单元的色彩标识 */
+        .u1 { border-color: var(--u1); color: var(--u1); }
+        .u2 { border-color: var(--u2); color: var(--u2); }
+        .u3 { border-color: var(--u3); color: var(--u3); }
+        .u4 { border-color: var(--u4); color: var(--u4); }
+        .u5 { border-color: var(--u5); color: var(--u5); }
+        .u6 { border-color: var(--u6); color: var(--u6); }
+        
+        .icon { font-size: 40px; margin-bottom: 10px; }
+    </style>
+</head>
+<body>
+    <h1>🌟 小小词汇探索家 (上册)</h1>
+    <div class="grid">
+        <div class="unit-card u1" onclick="go(1)">
+            <div class="icon">👋</div>
+            <h2>Unit 1</h2>
+            <p>你好，新朋友！</p>
+        </div>
+        <div class="unit-card u2" onclick="go(2)">
+            <div class="icon">🏠</div>
+            <h2>Unit 2</h2>
+            <p>温馨的一家人</p>
+        </div>
+        <div class="unit-card u3" onclick="go(3)">
+            <div class="icon">🦁</div>
+            <h2>Unit 3</h2>
+            <p>奇妙动物园</p>
+        </div>
+        <div class="unit-card u4" onclick="go(4)">
+            <div class="icon">🌳</div>
+            <h2>Unit 4</h2>
+            <p>农场与大自然</p>
+        </div>
+        <div class="unit-card u5" onclick="go(5)">
+            <div class="icon">🎨</div>
+            <h2>Unit 5</h2>
+            <p>五彩斑斓的世界</p>
+        </div>
+        <div class="unit-card u6" onclick="go(6)">
+            <div class="icon">🎂</div>
+            <h2>Unit 6</h2>
+            <p>生日派对与数字</p>
+        </div>
+    </div>
+
+    <script>
+        function go(u) {
+            // 跳转逻辑：如果是静态页可以跳转到 unit.html?u=1
+            location.href = `./unit_view.html?unit=${u}`;
+        }
+    </script>
+</body>
+</html>
