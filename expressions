@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nova's Express Lab | 常用表达</title>
+    <style>
+        :root { --primary: #4D96FF; --bg: #F8F9FA; }
+        body { font-family: 'Comic Sans MS', sans-serif; background: var(--bg); margin: 0; padding: 20px; text-align: center; }
+        
+        .header { background: white; padding: 20px; border-radius: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); margin-bottom: 20px; position: sticky; top: 10px; z-index: 100; }
+        h1 { margin: 0 0 15px 0; font-size: 24px; color: #333; }
+
+        /* 下拉菜单样式 */
+        select { 
+            padding: 12px 20px; border-radius: 50px; border: 2px solid var(--primary); 
+            font-size: 18px; outline: none; cursor: pointer; background: white;
+        }
+
+        .sentence-list { max-width: 600px; margin: 0 auto; display: flex; flex-direction: column; gap: 15px; }
+        
+        /* 句子卡片 */
+        .phrase-card {
+            background: white; padding: 20px; border-radius: 15px; text-align: left;
+            cursor: pointer; transition: 0.2s; border-left: 6px solid var(--primary);
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05); -webkit-tap-highlight-color: transparent;
+        }
+        .phrase-card:active { transform: scale(0.98); background: #f0f7ff; }
+        
+        .en { font-size: 20px; font-weight: bold; color: var(--primary); display: block; margin-bottom: 5px; }
+        .zh { font-size: 16px; color: #666; }
+        .scene-tag { float: right; font-size: 12px; background: #EEE; padding: 2px 8px; border-radius: 10px; color: #999; }
+
+        .back-home { margin-top: 30px; display: inline-block; color: #888; text-decoration: none; font-size: 14px; }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <h1>🗣️ 表达实验室</h1>
+        <select id="unitSelector" onchange="changeUnit()">
+            <option value="unit1">Unit 1: Hello!</option>
+            <option value="unit2">Unit 2: Family</option>
+            <option value="unit3">Unit 3: Zoo</option>
+            <option value="unit4">Unit 4: Farm</option>
+            <option value="unit5">Unit 5: Colours</option>
+            <option value="unit6">Unit 6: Birthday</option>
+        </select>
+    </div>
+
+    <div class="sentence-list" id="list">
+        </div>
+
+    <a href="index.html" class="back-home">🏠 返回主页</a>
+
+    <script>
+        let allData = {};
+
+        // 核心发音函数：确保安卓和苹果都支持英音
+        function speak(text) {
+            const audioUrl = `https://dict.youdao.com/dictvoice?audio=${encodeURIComponent(text)}&type=2`;
+            const audio = new Audio(audioUrl);
+            audio.play().catch(() => {
+                const speech = new SpeechSynthesisUtterance(text);
+                speech.lang = 'en-GB';
+                window.speechSynthesis.speak(speech);
+            });
+        }
+
+        // 解锁音频限制
+        document.addEventListener('touchstart', () => {
+            window.speechSynthesis.speak(new SpeechSynthesisUtterance(""));
+        }, { once: true });
+
+        async function loadData() {
+            const res = await fetch('expressions_data.json');
+            allData = await res.json();
+            changeUnit(); // 初始加载第一单元
+        }
+
+        function changeUnit() {
+            const unit = document.getElementById('unitSelector').value;
+            const list = document.getElementById('list');
+            const data = allData[unit];
+
+            list.innerHTML = "";
+            data.forEach(item => {
+                const card = document.createElement('div');
+                card.className = 'phrase-card';
+                card.onclick = () => speak(item.en);
+                card.innerHTML = `
+                    <span class="scene-tag">${item.scene}</span>
+                    <span class="en">${item.en}</span>
+                    <span class="zh">${item.zh}</span>
+                `;
+                list.appendChild(card);
+            });
+            window.scrollTo(0, 0);
+        }
+
+        loadData();
+    </script>
+</body>
+</html>
