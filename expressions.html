@@ -2,36 +2,44 @@
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Nova's Express Lab | 常用表达</title>
     <style>
         :root { --primary: #4D96FF; --bg: #F8F9FA; }
-        body { font-family: 'Comic Sans MS', sans-serif; background: var(--bg); margin: 0; padding: 20px; text-align: center; }
+        body { 
+            font-family: 'Comic Sans MS', 'system-ui', sans-serif; 
+            background: var(--bg); margin: 0; padding: 20px; text-align: center; 
+            -webkit-font-smoothing: antialiased;
+        }
         
-        .header { background: white; padding: 20px; border-radius: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); margin-bottom: 20px; position: sticky; top: 10px; z-index: 100; }
+        .header { 
+            background: white; padding: 20px; border-radius: 20px; 
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05); margin-bottom: 20px; 
+            position: sticky; top: 10px; z-index: 100; 
+        }
         h1 { margin: 0 0 15px 0; font-size: 24px; color: #333; }
 
-        /* 下拉菜单样式 */
         select { 
             padding: 12px 20px; border-radius: 50px; border: 2px solid var(--primary); 
             font-size: 18px; outline: none; cursor: pointer; background: white;
+            appearance: none; -webkit-appearance: none; /* 统一移动端外观 */
         }
 
         .sentence-list { max-width: 600px; margin: 0 auto; display: flex; flex-direction: column; gap: 15px; }
         
-        /* 句子卡片 */
         .phrase-card {
             background: white; padding: 20px; border-radius: 15px; text-align: left;
             cursor: pointer; transition: 0.2s; border-left: 6px solid var(--primary);
-            box-shadow: 0 4px 6px rgba(0,0,0,0.05); -webkit-tap-highlight-color: transparent;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05); 
+            -webkit-tap-highlight-color: transparent; /* 移除移动端点击阴影 */
         }
         .phrase-card:active { transform: scale(0.98); background: #f0f7ff; }
         
-        .en { font-size: 20px; font-weight: bold; color: var(--primary); display: block; margin-bottom: 5px; }
-        .zh { font-size: 16px; color: #666; }
-        .scene-tag { float: right; font-size: 12px; background: #EEE; padding: 2px 8px; border-radius: 10px; color: #999; }
+        .en { font-size: 19px; font-weight: bold; color: var(--primary); display: block; margin-bottom: 8px; line-height: 1.3; }
+        .zh { font-size: 15px; color: #666; font-weight: 500; }
+        .scene-tag { float: right; font-size: 11px; background: #f0f0f0; padding: 3px 10px; border-radius: 10px; color: #999; text-transform: uppercase; }
 
-        .back-home { margin-top: 30px; display: inline-block; color: #888; text-decoration: none; font-size: 14px; }
+        .back-home { margin: 40px 0; display: inline-block; color: #888; text-decoration: none; font-size: 14px; font-weight: bold; }
     </style>
 </head>
 <body>
@@ -55,27 +63,47 @@
 
     <script>
         let allData = {};
-
-        // 核心发音函数：确保安卓和苹果都支持英音
+        
+        // 核心发音引擎
         function speak(text) {
+            // 1. 尝试在线标准英音 (Type 2 为有道标准英音)
             const audioUrl = `https://dict.youdao.com/dictvoice?audio=${encodeURIComponent(text)}&type=2`;
             const audio = new Audio(audioUrl);
-            audio.play().catch(() => {
-                const speech = new SpeechSynthesisUtterance(text);
-                speech.lang = 'en-GB';
-                window.speechSynthesis.speak(speech);
-            });
+            
+            const playPromise = audio.play();
+            
+            if (playPromise !== undefined) {
+                playPromise.catch(error => {
+                    // 2. 兜底方案：使用手机内置 TTS 引擎
+                    window.speechSynthesis.cancel(); // 停止当前正在说的
+                    const speech = new SpeechSynthesisUtterance(text);
+                    speech.lang = 'en-GB'; // 强制英国英语
+                    speech.rate = 0.85;    // 稍微放慢，适合8岁孩子
+                    speech.pitch = 1.0;
+                    window.speechSynthesis.speak(speech);
+                });
+            }
         }
 
-        // 解锁音频限制
-        document.addEventListener('touchstart', () => {
-            window.speechSynthesis.speak(new SpeechSynthesisUtterance(""));
-        }, { once: true });
+        // 移动端音频环境解锁
+        function unlockAudioContext() {
+            const silent = new SpeechSynthesisUtterance("");
+            window.speechSynthesis.speak(silent);
+            document.removeEventListener('touchstart', unlockAudioContext);
+            document.removeEventListener('click', unlockAudioContext);
+        }
+        document.addEventListener('touchstart', unlockAudioContext);
+        document.addEventListener('click', unlockAudioContext);
 
         async function loadData() {
-            const res = await fetch('expressions_data.json');
-            allData = await res.json();
-            changeUnit(); // 初始加载第一单元
+            try {
+                const res = await fetch('expressions_data.json');
+                allData = await res.json();
+                changeUnit();
+            } catch (e) {
+                console.error("数据加载失败:", e);
+                document.getElementById('list').innerHTML = "<p>数据加载失败，请检查 expressions_data.json 是否存在</p>";
+            }
         }
 
         function changeUnit() {
@@ -83,13 +111,17 @@
             const list = document.getElementById('list');
             const data = allData[unit];
 
+            if (!data) return;
+
             list.innerHTML = "";
             data.forEach(item => {
                 const card = document.createElement('div');
                 card.className = 'phrase-card';
+                // 解决 iOS 点击延迟问题
                 card.onclick = () => speak(item.en);
+                
                 card.innerHTML = `
-                    <span class="scene-tag">${item.scene}</span>
+                    <span class="scene-tag">${item.scene || '日常'}</span>
                     <span class="en">${item.en}</span>
                     <span class="zh">${item.zh}</span>
                 `;
